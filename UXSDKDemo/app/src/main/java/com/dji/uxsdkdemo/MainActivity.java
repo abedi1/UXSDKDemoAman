@@ -52,7 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.Live:
+                ToastUtils.setResultToToast("button was clicked");
                 transition();
+                LiveStream live = new LiveStream(getApplicationContext());
                 break;
             default:
                 break;
