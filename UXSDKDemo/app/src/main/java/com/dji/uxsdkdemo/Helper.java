@@ -172,6 +172,8 @@ public class Helper {
 	        return false;
         }
         Model model = DJISDKManager.getInstance().getProduct().getModel();
+	    ToastUtils.setResultToToast("DID NOT CRASH");
+
         return model != null && (model == Model.INSPIRE_2
                 || model == Model.MATRICE_200
                 || model == Model.MATRICE_210
