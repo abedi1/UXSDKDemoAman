@@ -183,7 +183,8 @@ public class Helper {
                 || model == Model.MATRICE_600
                 || model == Model.MATRICE_600_PRO
                 || model == Model.A3
-                || model == Model.N3);
+                || model == Model.N3
+                || model == Model.MAVIC_MINI);
     }
 
     public static boolean isM300Product() {
