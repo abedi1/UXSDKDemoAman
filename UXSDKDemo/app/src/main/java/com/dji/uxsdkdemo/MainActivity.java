@@ -12,10 +12,11 @@ import androidx.core.app.ActivityCompat;
 
 import java.lang.reflect.Constructor;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     private Button liveBtn;
     private static final String TAG = MainActivity.class.getName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,27 +39,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
         liveBtn = (Button) findViewById(R.id.Live);
+
+
     }
 
-    private void transition() {
-        try {
-            LiveStream live = new LiveStream(getApplicationContext());
-        } catch (Exception e){
-            throw new RuntimeException("Context is borked");
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.Live:
-                ToastUtils.setResultToToast("button was clicked");
-                transition();
-                LiveStream live = new LiveStream(getApplicationContext());
-                break;
-            default:
-                break;
-        }
+    public void transition(View v) {
+        ToastUtils.setResultToToast("button was clicked");
+        LiveStream live = new LiveStream(getApplicationContext());
     }
 }
 
