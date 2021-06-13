@@ -1,16 +1,21 @@
 package com.dji.uxsdkdemo;
 
 import android.Manifest;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-public class MainActivity extends AppCompatActivity {
+import java.lang.reflect.Constructor;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private Button liveBtn;
     private static final String TAG = MainActivity.class.getName();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +37,26 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
-
+        liveBtn = (Button) findViewById(R.id.Live);
     }
 
+    private void transition() {
+        try {
+            LiveStream live = new LiveStream(getApplicationContext());
+        } catch (Exception e){
+            throw new RuntimeException("Context is borked");
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.Live:
+                transition();
+                break;
+            default:
+                break;
+        }
+    }
 }
 
