@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     public void transition(View v) {
 
         ToastUtils.setResultToToast("Start Live Show");
-        String liveShowUrl = "rtmps://live-api-s.facebook.com:443/rtmp/2787031871588114?s_bl=1&s_ps=1&s_psm=1&s_sw=0&s_vt=api-s&a=AbzFnoUOH8oNM7dV";
+        String liveShowUrl = "rtmp://sea.contribute.live-video.net/app/live_125145743_Vu7ExcOcWDsgowIz0E2lSYb5aEX26s";
         if (DJISDKManager.getInstance().getLiveStreamManager().isStreaming()) {
             ToastUtils.setResultToToast("already started!");
             return;
