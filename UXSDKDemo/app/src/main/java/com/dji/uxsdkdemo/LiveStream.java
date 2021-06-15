@@ -159,13 +159,14 @@ public class LiveStream extends LinearLayout implements PresentableView, View.On
     }
 
     void startLiveShow() {
-        ToastUtils.setResultToToast("Start Live Show");
-        if (!isLiveStreamManagerOn()) {
-            return;
+        if (isLiveStreamManagerOn()) {
+            DJISDKManager.getInstance().getLiveStreamManager().stopStream();
+            ToastUtils.setResultToToast("Stop Live Show");
         }
+        ToastUtils.setResultToToast("Start Live Show");
+
         if (DJISDKManager.getInstance().getLiveStreamManager().isStreaming()) {
             ToastUtils.setResultToToast("already started!");
-            return;
         }
         new Thread() {
             @Override

@@ -2,6 +2,7 @@ package com.dji.uxsdkdemo;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,17 @@ import androidx.core.app.ActivityCompat;
 
 import java.lang.reflect.Constructor;
 
+import dji.common.camera.ResolutionAndFrameRate;
+import dji.common.camera.SettingsDefinitions;
+import dji.common.error.DJIError;
+import dji.common.util.CommonCallbacks;
+import dji.sdk.products.Aircraft;
+import dji.sdk.products.HandHeld;
+import dji.sdk.sdkmanager.DJISDKManager;
+import dji.sdk.camera.Camera;
+
+import static com.dji.uxsdkdemo.DemoApplication.getProductInstance;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button liveBtn;
@@ -20,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DJISampleApplication.getEventBus().register(this);
 
         // When the compile and target version is higher than 22, please request the
         // following permissions at runtime to ensure the
@@ -39,13 +52,57 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         liveBtn = (Button) findViewById(R.id.Live);
+        //Camera camera = getCameraInstance();
 
+//        ResolutionAndFrameRate low = new ResolutionAndFrameRate(SettingsDefinitions.VideoResolution.RESOLUTION_1280x720, SettingsDefinitions.VideoFrameRate.FRAME_RATE_24_FPS);
+//        camera.setVideoResolutionAndFrameRate(low, new CommonCallbacks.CompletionCallback() {
+//            @Override
+//            public void onResult(DJIError djiError) {
+//                if (djiError != null) {
+//                    ToastUtils.setResultToToast("can't change mode of camera, error:"+djiError.getDescription());
+//                }
+//            }
+//        });
 
     }
 
     public void transition(View v) {
-        ToastUtils.setResultToToast("button was clicked");
-        LiveStream live = new LiveStream(getApplicationContext());
+
+        ToastUtils.setResultToToast("Start Live Show");
+        String liveShowUrl = "rtmps://live-api-s.facebook.com:443/rtmp/2787031871588114?s_bl=1&s_ps=1&s_psm=1&s_sw=0&s_vt=api-s&a=AbzFnoUOH8oNM7dV";
+        if (DJISDKManager.getInstance().getLiveStreamManager().isStreaming()) {
+            ToastUtils.setResultToToast("already started!");
+            return;
+        }
+        new Thread() {
+            @Override
+            public void run() {
+                DJISDKManager.getInstance().getLiveStreamManager().setLiveUrl(liveShowUrl);
+                int result = DJISDKManager.getInstance().getLiveStreamManager().startStream();
+                DJISDKManager.getInstance().getLiveStreamManager().setStartTime();
+                ToastUtils.setResultToToast("startLive:" + result +
+                        "\n isVideoStreamSpeedConfigurable:" + DJISDKManager.getInstance().getLiveStreamManager().isVideoStreamSpeedConfigurable() +
+                        "\n isLiveAudioEnabled:" + DJISDKManager.getInstance().getLiveStreamManager().isLiveAudioEnabled());
+            }
+        }.start();
+
+
     }
+    public static synchronized Camera getCameraInstance() {
+
+        if (getProductInstance() == null) return null;
+
+        Camera camera = null;
+
+        if (getProductInstance() instanceof Aircraft){
+            camera = ((Aircraft) getProductInstance()).getCamera();
+
+        } else if (getProductInstance() instanceof HandHeld) {
+            camera = ((HandHeld) getProductInstance()).getCamera();
+        }
+
+        return camera;
+    }
+
 }
 

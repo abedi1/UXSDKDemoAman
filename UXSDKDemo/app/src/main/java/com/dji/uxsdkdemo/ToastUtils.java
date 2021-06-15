@@ -42,7 +42,8 @@ public class ToastUtils {
     }
 
     public static void showToast(String msg) {
-        Toast.makeText(DJISampleApplication.getInstance(), msg, Toast.LENGTH_SHORT).show();
+        System.out.println("TOAST: " + msg);
+        //Toast.makeText(DJISampleApplication.getInstance(), msg, Toast.LENGTH_SHORT).show();
     }
 
     public static void setResultToToast(final String string) {
