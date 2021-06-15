@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -69,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
     public void transition(View v) {
 
         ToastUtils.setResultToToast("Start Live Show");
-        String liveShowUrl = "rtmp://sea.contribute.live-video.net/app/live_125145743_Vu7ExcOcWDsgowIz0E2lSYb5aEX26s";
+        Toast.makeText(MainActivity.this,"start live show", Toast.LENGTH_SHORT).show();
+        String liveShowUrl = "rtmp://lax.contribute.live-video.net/app/live_125145743_Vu7ExcOcWDsgowIz0E2lSYb5aEX26s";
         if (DJISDKManager.getInstance().getLiveStreamManager().isStreaming()) {
             ToastUtils.setResultToToast("already started!");
             return;
