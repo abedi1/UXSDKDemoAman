@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         ToastUtils.setResultToToast("Start Live Show");
         Toast.makeText(MainActivity.this,"start live show", Toast.LENGTH_SHORT).show();
-        String liveShowUrl = "rtmp://lax.contribute.live-video.net/app/live_125145743_Vu7ExcOcWDsgowIz0E2lSYb5aEX26s";
+        String liveShowUrl = "rtmp://54.157.140.28/livestream/drone";
         if (DJISDKManager.getInstance().getLiveStreamManager().isStreaming()) {
             ToastUtils.setResultToToast("already started!");
             return;
